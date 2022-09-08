@@ -1,0 +1,39 @@
+﻿@page
+@model HospiEnCasa.App.Presentacion.Pages.EdicionModel
+@{
+}
+
+<h2 class="text-primary">Edicion de Pacientes</h2>
+
+<br>
+
+<div class="border" style="background-color: #C1ECE9;">
+    <form method="post">
+
+
+        <input type="hidden" asp-for="paciente.Id">
+        <div class="input-group mb-3">
+            <input type="text" asp-for="paciente.Nombre" class="form-control" placeholder="Nombre">
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Apellidos" asp-for="paciente.Apellidos">
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Numero Telefono" asp-for="paciente.NumeroTelefono">
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Genero" asp-for="paciente.Genero">
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="submit" value="Guardar" class="btn btn primary form-control">
+        </div>
+
+
+    </form>
+
+
+</div>

@@ -1,0 +1,50 @@
+﻿@page
+@using HospiEnCasa.App.Dominio
+@model HospiEnCasa.App.Presentacion.Pages.Edicion2Model
+@{
+}
+
+<h2>Consultar Paciente</h2>
+
+<div class="border">
+    <form method="post">
+        <label for="">Numero Telefono</label>
+        <input asp-for="paciente.NumeroTelefono">
+        <input type="submit" value="Consultar" name="Consulta"class="btn btn-success form-control">
+    </form>
+
+</div>
+
+<br>
+
+<div class="border" style="background-color: #C1ECE9;">
+    <form method="post" asp-page-handler="edit">
+
+
+        <input type="hidden" asp-for="paciente.Id">
+        <div class="input-group mb-3">
+            <input type="text" asp-for="paciente.Nombre" class="form-control" placeholder="Nombre">
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Apellidos" asp-for="paciente.Apellidos">
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Numero Telefono" asp-for="paciente.NumeroTelefono">
+        </div>
+
+        <div class="input-group mb-3">
+            <select class="form-select form-control" asp-for="paciente.Genero" asp-items="@Html.GetEnumSelectList<Genero>()"></select>
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="submit" value="Guardar" name="Guardar" class="btn btn primary form-control">
+            <a class="btn btn-info form-control"  asp-route-pacienteId="@Model.paciente.Id" asp-page="/Pacientes/SignosVitales">Registrar Signos Vitales</a>
+        </div>
+
+
+    </form>
+
+
+</div>
