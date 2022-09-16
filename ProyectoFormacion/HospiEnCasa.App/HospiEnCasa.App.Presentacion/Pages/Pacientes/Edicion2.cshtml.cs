@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using HospiEnCasa.App.Dominio;
 using HospiEnCasa.App.Persistencia;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HospiEnCasa.App.Presentacion.Pages
 {
@@ -14,19 +15,28 @@ namespace HospiEnCasa.App.Presentacion.Pages
     {
         
         private readonly IRepositorioPacientes _repoPaciente;
+        private readonly IRepositorioMedico _repoMedico;
         [BindProperty]
         public Paciente paciente{get;set;}
-        public Edicion2Model(IRepositorioPacientes repoPaciente)
+        [BindProperty]
+        public Medico medico{get;set;}
+        public List<SelectListItem> Nombres{get;set;}
+        public Edicion2Model(IRepositorioPacientes repoPaciente,IRepositorioMedico repoMedico)
         {
             _repoPaciente=repoPaciente;
+            _repoMedico=repoMedico;
         }
         public void OnGet()
         {
             paciente=new Paciente();
+            Nombres = new List<SelectListItem>();
+            Nombres=_repoMedico.ConsultaMedicosxNombre();
+            medico=new Medico();
         }
 
         public async Task<IActionResult> OnPost()
         {
+            Nombres=_repoMedico.ConsultaMedicosxNombre();
             paciente=_repoPaciente.ConsultarPacientePorTelefono(paciente.NumeroTelefono);
             if(paciente==null)
             {
@@ -40,6 +50,13 @@ namespace HospiEnCasa.App.Presentacion.Pages
         }
         public async Task<IActionResult> OnPostEdit()
         {
+            string aux=Request.Form["valor"];
+            Console.WriteLine(aux);
+            var x=aux.Split(' ');
+            Console.WriteLine(x[2]);
+            medico=_repoMedico.ConsultarMedicoxCodigo(x[2]);
+            Console.WriteLine(medico.Nombre);
+            paciente.Medico=medico;
             paciente=_repoPaciente.ActualizarPaciente(paciente);
             if(paciente!=null)
             {
